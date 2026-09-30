@@ -32,17 +32,13 @@ passed to TrackMate, which detects each spatter particle with its mask detector
 and links the detections with a Kalman filter. Spots are filtered by size and
 circularity and tracks by mean speed. Each track is then described by its size,
 circularity, velocity, displacement, straightness and the ejection angle between
-its first and fifth detections. new_visuals.py combines these metrics from all
-datasets with the process parameters in the experiment logbook, applies the
-track filters set at the top of the script, normalises spatter counts per mm of
-track and draws the figures used in the paper.
+its first and fifth detections.
 
 ## Running the code
 
 Set the data and model paths at the top of main() in
 spatter_pipeline/run_folder_pipeline.py and run it from the repository root. It
-segments, tracks and analyses every dataset folder, and new_visuals.py then
-draws the figures from the results.
+segments, tracks and analyses every dataset folder.
 
 ```
 python spatter_pipeline/run_folder_pipeline.py
