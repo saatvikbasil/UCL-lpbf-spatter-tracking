@@ -9,7 +9,7 @@ power, scan speed, laser mode (continuous wave or pulsed) and melting regime
 through the normalised enthalpy. This repository contains the full pipeline,
 from the raw radiographs to the figures in the paper.
 
-![Modified U-Net architecture](docs/modified_unet_architecture.png)
+![alt text](https://github.com/saatvikbasil/UCL-lpbf-spatter-tracking/blob/main/modified_unet/Architecture.png)
 
 ## Modified U-Net
 
