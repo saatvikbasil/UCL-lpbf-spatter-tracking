@@ -265,7 +265,7 @@ def process_folder(
     input_folder,
     output_path,
     model_path,
-    threshold=0.4,
+    threshold=0.35,
     min_area=10,
     apply_morphology=False,
     invert_masks=True,
