@@ -378,7 +378,7 @@ def parse_arguments():
     parser.add_argument("--memory", default="8G", help="Java memory allocation for TrackMate")
     parser.add_argument("--batch-size", type=int, default=16, help="Batch size for prediction")
     parser.add_argument(
-        "--threshold", type=float, default=0.4, help="Threshold for segmentation mask"
+        "--threshold", type=float, default=0.35, help="Threshold for segmentation mask"
     )
     parser.add_argument(
         "--min-area", type=int, default=10, help="Minimum particle area to keep (in pixels)"
