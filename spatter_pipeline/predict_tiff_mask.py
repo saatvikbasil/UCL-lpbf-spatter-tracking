@@ -2,11 +2,13 @@
 """Segment spatter in a folder of X-ray frames with the trained U-Net.
 
 Every image in the input folder (searched recursively, in sorted order) is
-resized to 1024 x 512, passed through the model and thresholded. The masks are
-cleaned with a median filter, a 2 x 2 morphological opening (skipped with
---no-morphology) and removal of components smaller than --min-area pixels, then
-written to a single ImageJ-compatible TIFF stack. By default the stack is
-inverted at the end, giving black spatter on a white background.
+resized to 1024 x 512 and passed through the model, whose sigmoid output is the
+probability that a pixel is background. Pixels above --threshold form a
+background mask, which is cleaned with a median filter, a 2 x 2 morphological
+opening (skipped with --no-morphology) and removal of regions smaller than
+--min-area pixels. The masks are written to a single ImageJ-compatible TIFF
+stack, which by default is then inverted so that spatter is white (255) on a
+black background.
 
 Usage:
     python spatter_pipeline/predict_tiff_mask.py --input input_folder --output output_stack.tif \
@@ -113,7 +115,7 @@ def preprocess_batch(image_paths, target_width=TARGET_WIDTH, target_height=TARGE
 
 
 def process_batch(batch_data, model, device, threshold=0.2):
-    """Predict binary masks (sigmoid > threshold) at TARGET_WIDTH x TARGET_HEIGHT."""
+    """Predict background masks (sigmoid > threshold) at TARGET_WIDTH x TARGET_HEIGHT."""
     if not batch_data:
         return []
 
@@ -403,11 +405,16 @@ def parse_arguments():
     parser.add_argument(
         "--threshold",
         type=float,
-        default=0.4,
-        help="Threshold for binary mask creation (0.0-1.0)",
+        default=0.35,
+        help="Pixels with a sigmoid output above this are background (0.0-1.0)",
     )
 
-    parser.add_argument("--min-area", type=int, default=10, help="Minimum component area in pixels")
+    parser.add_argument(
+        "--min-area",
+        type=int,
+        default=10,
+        help="Mask regions smaller than this (pixels) are removed",
+    )
     parser.add_argument(
         "--no-morphology", action="store_true", help="Disable morphological operations"
     )

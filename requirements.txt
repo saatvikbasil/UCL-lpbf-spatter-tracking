@@ -1,4 +1,4 @@
-# Python 3.8 or newer. spatter_tracker.py also needs a Java runtime for Fiji/TrackMate,
+# Developed with Python 3.11. spatter_tracker.py also needs a Java runtime for Fiji/TrackMate,
 # which pyimagej downloads on first use. Pin versions to the ones you used for exact
 # reproducibility (e.g. from `pip freeze`).
 numpy
