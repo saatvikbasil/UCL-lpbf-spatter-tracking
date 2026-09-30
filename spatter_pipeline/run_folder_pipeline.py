@@ -10,11 +10,12 @@ stages, each run as a subprocess:
 
 Results are written to <batch output>/<dataset>/{masks,tracking,analysis}, and
 a batch_summary.txt is written to the batch output folder. The stage scripts
-are called by relative path, so run this from the repository root.
+are found next to this file; the paths in main() are relative to the folder
+you run from, normally the repository root.
 
 Set the paths at the top of main(), then run:
 
-    python run_folder_pipeline.py
+    python spatter_pipeline/run_folder_pipeline.py
 
 Author: Saatvik Basil
 """
@@ -30,6 +31,8 @@ import time
 import traceback
 from datetime import datetime
 from pathlib import Path
+
+PIPELINE_DIR = Path(__file__).resolve().parent
 
 
 def run_direct_cmd(cmd, description):
@@ -216,7 +219,7 @@ def process_single_dataset(input_folder, output_dir, args, dataset_name):
 
         predict_cmd = [
             sys.executable,
-            "predict_tiff_mask.py",
+            str(PIPELINE_DIR / "predict_tiff_mask.py"),
             "--input",
             str(input_folder),
             "--output",
@@ -248,7 +251,7 @@ def process_single_dataset(input_folder, output_dir, args, dataset_name):
 
         tracker_cmd = [
             sys.executable,
-            "spatter_tracker.py",
+            str(PIPELINE_DIR / "spatter_tracker.py"),
             "--input",
             str(mask_file),
             "--output",
@@ -307,7 +310,7 @@ def process_single_dataset(input_folder, output_dir, args, dataset_name):
 
         analysis_cmd = [
             sys.executable,
-            "spatter_analysis.py",
+            str(PIPELINE_DIR / "spatter_analysis.py"),
             "--spots",
             str(spots_csv),
             "--tracks",
@@ -518,7 +521,7 @@ def main():
     """
     BATCH_INPUT_FOLDER = "Data/test"  # one sub-folder per dataset
     BATCH_OUTPUT_DIR = "Results/FinalUpdatedBatch"
-    MODEL_PATH = "output/FINAL(1024).pth"
+    MODEL_PATH = "model_weights/Modified_Unet.pth"
     MEMORY = "16G"  # Java heap for TrackMate
 
     sys.argv = [

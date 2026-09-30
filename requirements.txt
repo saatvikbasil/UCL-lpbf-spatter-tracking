@@ -1,0 +1,18 @@
+# Python 3.8 or newer. spatter_tracker.py also needs a Java runtime for Fiji/TrackMate,
+# which pyimagej downloads on first use. Pin versions to the ones you used for exact
+# reproducibility (e.g. from `pip freeze`).
+numpy
+pandas
+matplotlib
+scipy
+scikit-learn
+openpyxl
+opencv-python
+tifffile
+tqdm
+torch>=1.13
+torchvision
+pyimagej>=1.0
+scyjava
+# Optional, Windows only: lets run_folder_pipeline.py shorten output paths over 260 characters
+# pywin32

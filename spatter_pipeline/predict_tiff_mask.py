@@ -9,7 +9,8 @@ written to a single ImageJ-compatible TIFF stack. By default the stack is
 inverted at the end, giving black spatter on a white background.
 
 Usage:
-    python predict_tiff_mask.py --input input_folder --output output_stack.tif --model model.pth
+    python spatter_pipeline/predict_tiff_mask.py --input input_folder --output output_stack.tif \
+        --model model_weights/Modified_Unet.pth
 """
 
 import argparse
@@ -26,7 +27,16 @@ import cv2
 import tifffile
 from tqdm import tqdm
 
-from pyimagesearch import config
+# modified_unet/ sits in the repository root, one level up
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+import modified_unet.model  # noqa: E402
+from modified_unet import config  # noqa: E402
+
+# The saved model was pickled when modified_unet was still called pyimagesearch,
+# so register the old name for torch.load to find the classes.
+sys.modules.setdefault("pyimagesearch", modified_unet)
+sys.modules.setdefault("pyimagesearch.model", modified_unet.model)
 
 DEFAULT_BATCH_SIZE = 16
 TARGET_WIDTH = 1024
@@ -36,8 +46,8 @@ TARGET_HEIGHT = 512
 def load_model(model_path, device):
     """Load the saved model in evaluation mode; return None on failure.
 
-    The checkpoint holds the whole pickled UNet, so the pyimagesearch package
-    must be importable.
+    The checkpoint holds the whole pickled UNet rather than a state dict, so
+    the modified_unet classes must be importable (see the alias above).
     """
     print(f"Loading model from {model_path}...")
     try:

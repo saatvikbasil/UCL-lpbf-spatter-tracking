@@ -14,7 +14,7 @@ and 5th spot of each track (1st and last for shorter tracks), with 0 degrees
 pointing straight up in the image.
 
 Usage:
-    python spatter_analysis.py --spots spots.csv --tracks tracks.csv --output results_dir
+    python spatter_pipeline/spatter_analysis.py --spots spots.csv --tracks tracks.csv --output results_dir
 """
 
 import argparse

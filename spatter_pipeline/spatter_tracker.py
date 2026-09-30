@@ -8,7 +8,7 @@ tracks are exported to CSV for spatter_analysis.py, and the TrackMate session
 can optionally be saved as XML.
 
 Usage:
-    python spatter_tracker.py --input /path/to/mask.tif --output /path/to/output_dir --memory 8G
+    python spatter_pipeline/spatter_tracker.py --input mask.tif --output output_dir --memory 8G
 
 Requires pyimagej and scyjava (Fiji 2.13.0 is fetched on first run), pandas.
 """
