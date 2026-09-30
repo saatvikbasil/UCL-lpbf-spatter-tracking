@@ -8,16 +8,10 @@ stages, each run as a subprocess:
 2. spatter_tracker.py    - TrackMate detection and Kalman tracking
 3. spatter_analysis.py   - per-track metrics, figures and a summary report
 
-Results are written to <batch output>/<dataset>/{masks,tracking,analysis}, and
-a batch_summary.txt is written to the batch output folder. The stage scripts
-are found next to this file; the paths in main() are relative to the folder
-you run from, normally the repository root.
-
 Set the paths at the top of main(), then run:
 
     python spatter_pipeline/run_folder_pipeline.py
 
-Author: Saatvik Basil
 """
 
 import argparse
